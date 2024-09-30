@@ -6,10 +6,13 @@
   const systemPrompt = "Copy what the user says exactly"
 
   // register(id: unique button id, name: name of button visible in Coach, function: function to call when button is clicked) 
-  codioIDE.coachBot.register("iNeedHelpButton", "What is project 1 about?", onButtonPress)
+  str1 = "What is project 1 about?"
+  str2 = "What is the most recent announcement?"
+  codioIDE.coachBot.register("button1", str1, onButtonPress.bind(str1))
+  codioIDE.coachBot.register("button2", str2, onButtonPress.bind(str2))
 
   // function called when I have a question button is pressed
-  async function onButtonPress() {
+  async function onButtonPress(question) {
     // Function that automatically collects all available context 
     // returns the following object: {guidesPage, assignmentData, files, error}
     // const context = await codioIDE.coachBot.getContext()
@@ -20,7 +23,7 @@
       method: "POST",
       body: JSON.stringify({
         "course_id": "506795",
-        "message": "What is project 1 about?"
+        "message": question,
       }),
     })
     const json = await response.json()
