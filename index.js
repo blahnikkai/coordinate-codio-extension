@@ -1,3 +1,21 @@
+async function testBasicResponse() {
+  const response = await basicResponse()
+  const text = await response.text()
+  console.log(text.slice(0, 40))
+}
+
+async function basicResponse() {
+  return await fetch("https://example.org/products.json")
+}
+
+async function testGetResponse() {
+  const response = await getResponse("What's the most recent announcement?")
+  const json = await response.json()
+  console.log(json)
+  const msg = json.message
+  console.log(msg)
+}
+
 async function getResponse(question) {
   return await fetch("http://0.0.0.0:5005/ask", {
     method: "POST",
@@ -13,7 +31,7 @@ async function getResponse(question) {
   })
 }
 
-async function main(codioIDE, window) {
+async function runCodio(codioIDE, window) {
   
   codioIDE.coachBot.register("QuestionButton", "I have a question", onButtonPress)
 
@@ -26,12 +44,13 @@ async function main(codioIDE, window) {
     codioIDE.coachBot.write("Ask your question in the text input below, or type 'Quit' to quit")
     while(true) {
       
-      // const response = await getResponse(str1)
-      // const json = await response.json()
-      // const msg = json.message
-      
       const user_input = await codioIDE.coachBot.input()
-      
+
+      const response = await getResponse()
+      const json = await response.json()
+      const msg = json.message
+      await codioIDE.coachBot.write(msg)
+
       if(user_input == "Quit") {
         break;
       }
@@ -66,14 +85,9 @@ async function main(codioIDE, window) {
   }
 }
 
-main(window.codioIDE, window)
+async function main() {
+  runCodio(window.codioIDE, window)
+  // testGetResponse()
+}
 
-// async function testGetResponse() {
-//   const response = await getResponse("What's for breakfast?")
-//   const json = await response.json()
-//   console.log(json)
-//   const msg = json.message
-//   console.log(msg)
-// }
-
-// testGetResponse()
+main()
