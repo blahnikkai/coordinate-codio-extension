@@ -1,5 +1,5 @@
 async function getResponse(question) {
-  return await fetch("http://0.0.0.0:5005/ask", {
+  return await fetch("http://localhost:5005/ask", {
     method: "POST",
     mode: "cors",
     headers: {
