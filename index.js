@@ -17,7 +17,7 @@ async function testGetResponse() {
 }
 
 async function getResponse(question) {
-  return await fetch("https://localhost:5005/ask", {
+  return await fetch(`https://IP_ADDR:5005/ask`, {
     method: "POST",
     mode: "cors",
     headers: {
@@ -35,8 +35,6 @@ async function runCodio(codioIDE, window) {
   
   codioIDE.coachBot.register("QuestionButton", "I have a question", onButtonPress)
 
-  const systemPrompt = "Help the user with their questions. The user can type 'Quit' to quit"
-
   async function onButtonPress() {
     
     let messages = []
@@ -46,33 +44,25 @@ async function runCodio(codioIDE, window) {
       
       const user_input = await codioIDE.coachBot.input()
       
-      const response = await getResponse(user_input)
-      const json = await response.json()
-      const msg = json.message
-      
       if(user_input == "Quit") {
         break;
       }
-      
+
       messages.push({
-          "role": "user", 
-          "content": user_input,
+        "role": "user", 
+        "content": user_input,
       })
-      
-      const llm_response = await codioIDE.coachBot.ask(
-        {
-          systemPrompt: systemPrompt,
-          messages: messages,
-        }, 
-        {
-          preventMenu: true
-        },
-      )
+
+      const response = await getResponse(user_input)
+      const json = await response.json()
+      const msg = json.response
 
       messages.push({
         "role": "assistant",
-        "content": llm_response.result,
+        "content": msg,
       })
+      
+      codioIDE.coachBot.write(msg)
 
       if (messages.length >= 10) {
         const removedElements = messages.splice(0, 2)
@@ -85,8 +75,8 @@ async function runCodio(codioIDE, window) {
 }
 
 async function main() {
-  runCodio(window.codioIDE, window)
-  // testGetResponse()
+  // runCodio(window.codioIDE, window)
+  testGetResponse()
 }
 
 main()
