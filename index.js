@@ -1,5 +1,5 @@
 async function getResponse(question) {
-  return await fetch("http://localhost:5005/ask", {
+  return await fetch("https://localhost:5005/ask", {
     method: "POST",
     mode: "cors",
     headers: {
@@ -26,11 +26,12 @@ async function main(codioIDE, window) {
     codioIDE.coachBot.write("Ask your question in the text input below, or type 'Quit' to quit")
     while(true) {
       
-      // const response = await getResponse(str1)
-      // const json = await response.json()
-      // const msg = json.message
       
       const user_input = await codioIDE.coachBot.input()
+      
+      const response = await getResponse(user_input)
+      const json = await response.json()
+      const msg = json.message
       
       if(user_input == "Quit") {
         break;
