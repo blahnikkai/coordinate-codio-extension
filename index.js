@@ -44,10 +44,6 @@ async function runCodio(codioIDE, window) {
     codioIDE.coachBot.write("Ask your question in the text input below, or type 'Quit' to quit")
     while(true) {
       
-      // const response = await getResponse(str1)
-      // const json = await response.json()
-      // const msg = json.message
-      
       const user_input = await codioIDE.coachBot.input()
       
       const response = await getResponse(user_input)
