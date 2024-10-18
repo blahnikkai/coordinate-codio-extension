@@ -1,13 +1,3 @@
-async function testBasicResponse() {
-  const response = await basicResponse()
-  const text = await response.text()
-  console.log(text.slice(0, 40))
-}
-
-async function basicResponse() {
-  return await fetch("https://example.org/products.json")
-}
-
 async function testGetResponse() {
   const response = await getResponse("What's the most recent announcement?")
   const json = await response.json()
@@ -75,8 +65,8 @@ async function runCodio(codioIDE, window) {
 }
 
 async function main() {
-  // runCodio(window.codioIDE, window)
-  testGetResponse()
+  runCodio(window.codioIDE, window)
+  // testGetResponse()
 }
 
 main()
