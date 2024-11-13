@@ -7,7 +7,7 @@ async function testGetResponse() {
 }
 
 async function getResponse(question) {
-  return await fetch(`https://localhost:5005/ask`, {
+  return await fetch(`https://latte.rc.ufl.edu/ask`, {
     method: "POST",
     mode: "cors",
     headers: {
