@@ -15,7 +15,7 @@ async function getResponse(question) {
       "Accept": "application/json"
     },
     body: JSON.stringify({
-      "course_id": "506795",
+      "course_id": "506849",
       "message": question,
     }),
   })
